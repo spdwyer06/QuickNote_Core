@@ -8,4 +8,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QuickNote_Data\QuickNote_Data.csproj" />
+    <ProjectReference Include="..\QuickNote_Models\QuickNote_Models.csproj" />
+    <ProjectReference Include="..\QuickNote_Services\QuickNote_Services.csproj" />
+  </ItemGroup>
+
 </Project>
