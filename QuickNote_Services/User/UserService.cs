@@ -17,6 +17,7 @@ namespace QuickNote_Services.User
             _db = db;
         }
 
+
         public async Task<bool> RegisterUserAsync(UserRegister model)
         {
             // If the email or username is already in use return false
@@ -39,6 +40,24 @@ namespace QuickNote_Services.User
             var numOfChanges = await _db.SaveChangesAsync();
 
             return numOfChanges == 1;
+        }
+
+        public async Task<UserDetail> GetUserByIdAsync(int userId)
+        {
+            var entity = await _db.Users.FindAsync(userId);
+
+            if(entity is null)
+                return null;
+
+            return new UserDetail
+            {
+                Id = entity.Id,
+                Username = entity.Username,
+                Email = entity.Username,
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                DateCreated = entity.DateCreated
+            };
         }
 
 
