@@ -34,5 +34,16 @@ namespace QuickNote_Web.Controllers
             
             return BadRequest("User could not be registered");
         }
+
+        [HttpGet("{userId: int}")]
+        public async Task<IActionResult> GetUserById([FromRoute] int userId)
+        {
+            var userDetail = await _service.GetUserByIdAsync(userId);
+
+            if(userDetail is null)
+                return NotFound();
+
+            return Ok(userDetail);
+        }
     }
 }
