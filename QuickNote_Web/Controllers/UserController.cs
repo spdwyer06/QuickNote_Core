@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuickNote_Models.User;
 using QuickNote_Services.User;
 
 namespace QuickNote_Web.Controllers
@@ -17,6 +18,21 @@ namespace QuickNote_Web.Controllers
         public UserController(IUserService service)
         {
             _service = service;
+        }
+
+        // [HttpVerb("Route")]
+        [HttpPost("Register")]
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegister model)
+        {
+            // Checking to make sure the model is valid
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var wasAdded = await _service.RegisterUserAsync(model);
+            if(wasAdded)
+                return Ok("User was registered");
+            
+            return BadRequest("User could not be registered");
         }
     }
 }
