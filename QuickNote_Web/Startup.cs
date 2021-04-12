@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using QuickNote_Data;
+using QuickNote_Services.User;
 
 namespace QuickNote_Web
 {
@@ -33,6 +34,8 @@ namespace QuickNote_Web
 
             // Sets up dbContext injection and sets up any options wanted to be used in the ApplicationDbContext
             services.AddDbContext<ApplicationDbContext>(options =>  options.UseSqlServer(connectionString));
+            // Add User Service/Interface for DI
+            services.AddScoped<IUserService, UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
