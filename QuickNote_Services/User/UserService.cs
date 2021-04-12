@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuickNote_Data;
 using QuickNote_Data.Entities;
@@ -26,9 +27,13 @@ namespace QuickNote_Services.User
             {
                 Email = model.Email,
                 Username = model.Username,
-                Password = model.Password,
                 DateCreated = DateTime.Now
             };
+
+            var passwordHasher = new PasswordHasher<UserEntity>();
+            
+            // Encrypts the password from the model and sets it as the password on the entity
+            entity.Password = passwordHasher.HashPassword(entity, model.Password);
 
             _db.Users.Add(entity);
             var numOfChanges = await _db.SaveChangesAsync();
