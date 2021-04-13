@@ -8,8 +8,17 @@ namespace QuickNote_Data.Entities
         [Key]
         public int Id { get; set; }
 
+        // Data Relationship was set up in ApplicationDbContext.cs in OnModelCreating()
+        // [ForeignKey(nameof(Owner))]
+            // FK property
+        // public int OwnerId { get; set; }
+            // Navigation property
+        // public UserEntity Owner { get; set; }
+
         [Required]
         public int OwnerId { get; set; }
+
+        public UserEntity Owner { get; set; }
 
         [Required]
         public string Title { get; set; }

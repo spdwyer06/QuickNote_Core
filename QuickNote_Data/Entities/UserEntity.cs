@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace QuickNote_Data.Entities
@@ -24,5 +25,7 @@ namespace QuickNote_Data.Entities
 
         [Required]
         public DateTime DateCreated { get; set; }
+
+        public List<NoteEntity> Notes { get; set; }
     }
 }
