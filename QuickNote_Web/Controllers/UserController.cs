@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuickNote_Models.User;
@@ -35,6 +36,7 @@ namespace QuickNote_Web.Controllers
             return BadRequest("User could not be registered");
         }
 
+        [Authorize]
         [HttpGet("{userId:int}")]
         public async Task<IActionResult> GetUserById([FromRoute] int userId)
         {

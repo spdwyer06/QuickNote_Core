@@ -58,6 +58,9 @@ namespace QuickNote_Web
 
             app.UseRouting();
 
+            // Add authentication middleware to the IApplicationBuilder, enabling authentication capabilities
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
