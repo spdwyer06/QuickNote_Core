@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuickNote_Models.Token;
 using QuickNote_Models.User;
+using QuickNote_Services.Token;
 using QuickNote_Services.User;
 
 namespace QuickNote_Web.Controllers
@@ -15,10 +17,12 @@ namespace QuickNote_Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
+        private readonly ITokenService _tokenService;
 
-        public UserController(IUserService service)
+        public UserController(IUserService service, ITokenService tokenService)
         {
             _service = service;
+            _tokenService = tokenService;
         }
 
         // [HttpVerb("Route")]
@@ -46,6 +50,21 @@ namespace QuickNote_Web.Controllers
                 return NotFound();
 
             return Ok(userDetail);
+        }
+
+        // The ~ before the route overrides the basic route configuration, since we are in the User controller but this is for Token (Added it to User controller instead of creating a separate Token controller)
+        [HttpPost("~/api/Token")]
+        public async Task<IActionResult> Token([FromBody] TokenRequest request)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var tokenResponse = await _tokenService.GetTokenAsync(request);
+
+            if(tokenResponse is null)
+                return BadRequest("Invalid username or password");
+
+            return Ok(tokenResponse);
         }
     }
 }

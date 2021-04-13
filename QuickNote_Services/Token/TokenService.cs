@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using QuickNote_Data;
 using QuickNote_Data.Entities;
@@ -15,10 +16,14 @@ namespace QuickNote_Services.Token
     public class TokenService : ITokenService
     {
         private readonly ApplicationDbContext _db;
+        
+        // Used to access configuration data, in this case the Issuer and Audience info
+        private readonly IConfiguration _configuration;
 
-        public TokenService(ApplicationDbContext db)
+        public TokenService(ApplicationDbContext db, IConfiguration configuration)
         {
             _db = db;
+            _configuration = configuration;
         }
 
 
