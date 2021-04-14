@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuickNote_Data;
+using QuickNote_Services.Note;
 using QuickNote_Services.Token;
 using QuickNote_Services.User;
 
@@ -44,6 +45,9 @@ namespace QuickNote_Web
 
             // Add Token Service/Interface for DI
             services.AddScoped<ITokenService, TokenService>();
+
+            // Add Note Service/Interface for DI
+            services.AddScoped<INoteService, NoteService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
                 options.RequireHttpsMetadata = false;
