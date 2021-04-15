@@ -64,7 +64,7 @@ namespace QuickNote_Services.Note
             };
         }
 
-        public async Task<bool> UpdateNoteByNoteIdAsync(NoteEdit updatedNote)
+        public async Task<bool> UpdateNoteAsync(NoteEdit updatedNote)
         {
             var originalNote = await _db.Notes.FindAsync(updatedNote.Id);
 
@@ -74,6 +74,18 @@ namespace QuickNote_Services.Note
             originalNote.Title = updatedNote.Title;
             originalNote.Content = updatedNote.Content;
             originalNote.ModifiedUtc = DateTimeOffset.UtcNow;
+
+            return await _db.SaveChangesAsync() == 1;
+        }
+
+        public async Task<bool> DeleteNoteByNoteIdAsync(int noteId)
+        {
+            var note = await _db.Notes.FindAsync(noteId);
+
+            if(note == null || note.OwnerId != _userId)
+                return false;
+            
+            _db.Notes.Remove(note);
 
             return await _db.SaveChangesAsync() == 1;
         }
