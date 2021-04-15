@@ -12,7 +12,7 @@ namespace QuickNote_Services.Note
 
         Task<NoteDetail> GetNoteByNoteIdAsync(int noteId);
 
-        Task<bool> UpdateNoteAsync(NoteEdit updatedNote);
+        Task<bool> UpdateNoteAsync(int noteId, NoteEdit updatedNote);
 
         Task<bool> DeleteNoteByNoteIdAsync(int noteId);
     }

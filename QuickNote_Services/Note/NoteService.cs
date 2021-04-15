@@ -85,9 +85,9 @@ namespace QuickNote_Services.Note
             };
         }
 
-        public async Task<bool> UpdateNoteAsync(NoteEdit updatedNote)
+        public async Task<bool> UpdateNoteAsync(int noteId, NoteEdit updatedNote)
         {
-            var originalNote = await _db.Notes.FindAsync(updatedNote.Id);
+            var originalNote = await _db.Notes.FindAsync(noteId);
 
             if(originalNote == null || originalNote.OwnerId != _userId)
                 return false;

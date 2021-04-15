@@ -74,6 +74,18 @@ namespace QuickNote_Web.Controllers
             return Ok(note);
         }
 
+        [HttpPut("{noteId:int}")]
+        public async Task<IActionResult> UpdateNote([FromRoute] int noteId, [FromBody] NoteEdit updatedNote)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            if(! await _service.UpdateNoteAsync(noteId, updatedNote))
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            return Ok();
+        }
+
 
 
 
