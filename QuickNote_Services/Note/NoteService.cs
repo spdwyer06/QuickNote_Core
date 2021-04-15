@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using QuickNote_Data;
 using QuickNote_Data.Entities;
@@ -30,6 +32,19 @@ namespace QuickNote_Services.Note
             await _db.Notes.AddAsync(note);
             
             return await _db.SaveChangesAsync() == 1;
+        }
+
+        public IEnumerable<NoteListItem> GetAllNotes()
+        {
+            var query = _db.Notes.Where(note => note.OwnerId == _userId)
+                                .Select(note => new NoteListItem
+                                {
+                                    Id = note.Id,
+                                    Title = note.Title,
+                                    CreatedUtc = note.CreatedUtc
+                                });
+            
+            return query.ToList();
         }
     }
 }
