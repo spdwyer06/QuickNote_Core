@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,8 +38,13 @@ namespace QuickNote_Web
             // Add connection string and dbContext setup
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
+            //services.AddHttpContextAccessor();
+
+            // Allow access to HttpContext
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // Sets up dbContext injection and sets up any options wanted to be used in the ApplicationDbContext
-            services.AddDbContext<ApplicationDbContext>(options =>  options.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
             
             // Add User Service/Interface for DI
             services.AddScoped<IUserService, UserService>();
@@ -63,6 +69,8 @@ namespace QuickNote_Web
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
+
+            //services.AddHttpContextAccessor();
 
             services.AddControllers();
 

@@ -8,12 +8,12 @@ namespace QuickNote_Services.Note
     {
         Task<bool> CreateNoteAsync(NoteCreate model);
 
-        IEnumerable<NoteListItem> GetAllNotes();
+        //IEnumerable<NoteListItem> GetAllNotes();
 
-        Task<NoteDetail> GetNoteByNoteIdAsync(int noteId);
+        //Task<NoteDetail> GetNoteByNoteIdAsync(int noteId);
 
-        Task<bool> UpdateNoteAsync(NoteEdit updatedNote);
+        //Task<bool> UpdateNoteAsync(NoteEdit updatedNote);
 
-        Task<bool> DeleteNoteByNoteIdAsync(int noteId);
+        //Task<bool> DeleteNoteByNoteIdAsync(int noteId);
     }
 }
