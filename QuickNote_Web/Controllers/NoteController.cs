@@ -86,8 +86,14 @@ namespace QuickNote_Web.Controllers
             return Ok();
         }
 
+        [HttpDelete("{noteId:int}")]
+        public async Task<IActionResult> DeleteNote([FromRoute] int noteId)
+        {
+            if(! await _service.DeleteNoteByNoteIdAsync(noteId))
+                return StatusCode(StatusCodes.Status500InternalServerError);
 
-
+            return Ok();
+        }
 
 
 
