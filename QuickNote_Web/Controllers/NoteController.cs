@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using QuickNote_Services.Note;
 
 namespace QuickNote_Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class NoteController : ControllerBase
@@ -52,6 +54,31 @@ namespace QuickNote_Web.Controllers
 
             return BadRequest("Your note could not be created");
         }
+
+        [HttpGet("All")]
+        public IActionResult GetAllNotes()
+        {
+            var notes = _service.GetAllNotes();
+
+            return Ok(notes);
+        }
+
+        [HttpGet("{noteId:int}")]
+        public async Task<IActionResult> GetNoteByNoteId([FromRoute] int noteId)
+        {
+            var note = await _service.GetNoteByNoteIdAsync(noteId);
+
+            if(note is null)
+                return NotFound();
+
+            return Ok(note);
+        }
+
+
+
+
+
+
 
         // private NoteService CreateNoteService()
         // {

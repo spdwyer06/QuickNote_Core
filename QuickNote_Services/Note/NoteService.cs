@@ -55,61 +55,61 @@ namespace QuickNote_Services.Note
             return await _db.SaveChangesAsync() == 1;
         }
 
-        // public IEnumerable<NoteListItem> GetAllNotes()
-        // {
-        //     var query = _db.Notes.Where(note => note.OwnerId == _userId)
-        //                         .Select(note => new NoteListItem
-        //                         {
-        //                             Id = note.Id,
-        //                             Title = note.Title,
-        //                             CreatedUtc = note.CreatedUtc
-        //                         });
+        public IEnumerable<NoteListItem> GetAllNotes()
+        {
+            var query = _db.Notes.Where(note => note.OwnerId == _userId)
+                                .Select(note => new NoteListItem
+                                {
+                                    Id = note.Id,
+                                    Title = note.Title,
+                                    CreatedUtc = note.CreatedUtc
+                                });
             
-        //     return query.ToList();
-        // }
+            return query.ToList();
+        }
 
-        // public async Task<NoteDetail> GetNoteByNoteIdAsync(int noteId)
-        // {
-        //     var noteEntity = await _db.Notes.FindAsync(noteId);
+        public async Task<NoteDetail> GetNoteByNoteIdAsync(int noteId)
+        {
+            var noteEntity = await _db.Notes.FindAsync(noteId);
 
-        //     if(noteEntity is null)
-        //         return null;
+            if(noteEntity is null)
+                return null;
 
-        //     return new NoteDetail
-        //     {
-        //         Id = noteEntity.Id,
-        //         Title = noteEntity.Title,
-        //         Content = noteEntity.Content,
-        //         CreatedUtc = noteEntity.CreatedUtc,
-        //         ModifiedUtc = noteEntity.ModifiedUtc
-        //     };
-        // }
+            return new NoteDetail
+            {
+                Id = noteEntity.Id,
+                Title = noteEntity.Title,
+                Content = noteEntity.Content,
+                CreatedUtc = noteEntity.CreatedUtc,
+                ModifiedUtc = noteEntity.ModifiedUtc
+            };
+        }
 
-        // public async Task<bool> UpdateNoteAsync(NoteEdit updatedNote)
-        // {
-        //     var originalNote = await _db.Notes.FindAsync(updatedNote.Id);
+        public async Task<bool> UpdateNoteAsync(NoteEdit updatedNote)
+        {
+            var originalNote = await _db.Notes.FindAsync(updatedNote.Id);
 
-        //     if(originalNote == null || originalNote.OwnerId != _userId)
-        //         return false;
+            if(originalNote == null || originalNote.OwnerId != _userId)
+                return false;
 
-        //     originalNote.Title = updatedNote.Title;
-        //     originalNote.Content = updatedNote.Content;
-        //     originalNote.ModifiedUtc = DateTimeOffset.UtcNow;
+            originalNote.Title = updatedNote.Title;
+            originalNote.Content = updatedNote.Content;
+            originalNote.ModifiedUtc = DateTimeOffset.UtcNow;
 
-        //     return await _db.SaveChangesAsync() == 1;
-        // }
+            return await _db.SaveChangesAsync() == 1;
+        }
 
-        // public async Task<bool> DeleteNoteByNoteIdAsync(int noteId)
-        // {
-        //     var note = await _db.Notes.FindAsync(noteId);
+        public async Task<bool> DeleteNoteByNoteIdAsync(int noteId)
+        {
+            var note = await _db.Notes.FindAsync(noteId);
 
-        //     if(note == null || note.OwnerId != _userId)
-        //         return false;
+            if(note == null || note.OwnerId != _userId)
+                return false;
             
-        //     _db.Notes.Remove(note);
+            _db.Notes.Remove(note);
 
-        //     return await _db.SaveChangesAsync() == 1;
-        // }
+            return await _db.SaveChangesAsync() == 1;
+        }
     }
 }
 
