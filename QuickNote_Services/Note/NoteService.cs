@@ -68,11 +68,8 @@ namespace QuickNote_Services.Note
         {
             var originalNote = await _db.Notes.FindAsync(updatedNote.Id);
 
-            if(originalNote == null || !originalNote.OwnerId == _userId)
+            if(originalNote == null || originalNote.OwnerId != _userId)
                 return false;
-            
-            // if(!originalNote.OwnerId == _userId)
-            //     return false;
 
             originalNote.Title = updatedNote.Title;
             originalNote.Content = updatedNote.Content;
