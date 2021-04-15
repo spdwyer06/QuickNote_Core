@@ -11,5 +11,7 @@ namespace QuickNote_Services.Note
         IEnumerable<NoteListItem> GetAllNotes();
 
         Task<NoteDetail> GetNoteByNoteIdAsync(int noteId);
+
+        Task<bool> UpdateNoteByNoteIdAsync(NoteEdit updatedNote);
     }
 }

@@ -26,7 +26,7 @@ namespace QuickNote_Services.Note
                 OwnerId = _userId,
                 Title = model.Title,
                 Content = model.Content,
-                CreatedUtc = DateTimeOffset.Now
+                CreatedUtc = DateTimeOffset.UtcNow
             };
 
             await _db.Notes.AddAsync(note);
@@ -62,6 +62,23 @@ namespace QuickNote_Services.Note
                 CreatedUtc = noteEntity.CreatedUtc,
                 ModifiedUtc = noteEntity.ModifiedUtc
             };
+        }
+
+        public async Task<bool> UpdateNoteByNoteIdAsync(NoteEdit updatedNote)
+        {
+            var originalNote = await _db.Notes.FindAsync(updatedNote.Id);
+
+            if(originalNote == null || !originalNote.OwnerId == _userId)
+                return false;
+            
+            // if(!originalNote.OwnerId == _userId)
+            //     return false;
+
+            originalNote.Title = updatedNote.Title;
+            originalNote.Content = updatedNote.Content;
+            originalNote.ModifiedUtc = DateTimeOffset.UtcNow;
+
+            return await _db.SaveChangesAsync() == 1;
         }
     }
 }
