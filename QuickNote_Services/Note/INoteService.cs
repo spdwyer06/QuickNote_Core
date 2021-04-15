@@ -9,5 +9,7 @@ namespace QuickNote_Services.Note
         Task<bool> CreateNoteAsync(NoteCreate model);
 
         IEnumerable<NoteListItem> GetAllNotes();
+
+        Task<NoteDetail> GetNoteByNoteIdAsync(int noteId);
     }
 }

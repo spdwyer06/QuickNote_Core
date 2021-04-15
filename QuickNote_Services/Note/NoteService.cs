@@ -46,5 +46,23 @@ namespace QuickNote_Services.Note
             
             return query.ToList();
         }
+
+        public async Task<NoteDetail> GetNoteByNoteIdAsync(int noteId)
+        {
+            var noteEntity = await _db.Notes.FindAsync(noteId);
+
+            if(noteEntity is null)
+                return null;
+
+            return new NoteDetail
+            {
+                Id = noteEntity.Id,
+                Title = noteEntity.Title,
+                Content = noteEntity.Content,
+                CreatedUtc = noteEntity.CreatedUtc,
+                ModifiedUtc = noteEntity.ModifiedUtc
+            };
+        }
     }
 }
+
